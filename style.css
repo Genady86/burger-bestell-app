@@ -1,0 +1,115 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f1ec;
+    color: #222222;
+}
+
+header {
+    background-color: #c9472b;
+    color: white;
+}
+
+.header-content {
+    max-width: 1440px;
+    height: 80px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.menu-button {
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-size: 32px;
+    cursor: pointer;
+}
+
+main {
+    max-width: 1440px;
+    margin: 0 auto;
+    background-color: white;
+}
+
+.hero-section {
+    position: relative;
+    height: 360px;
+    overflow: visible;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 55%;
+}
+
+.restaurant-logo {
+    position: absolute;
+    left: 48px;
+    bottom: -55px;
+    width: 110px;
+    height: 110px;
+    border: 5px solid white;
+    border-radius: 50%;
+    background-color: #222222;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.restaurant-logo span {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.restaurant-logo strong {
+    font-size: 32px;
+    line-height: 30px;
+}
+
+.restaurant-content {
+    flex: 1;
+    min-width: 0;
+    padding: 85px 48px 64px;
+}
+
+.restaurant-info h1 {
+    margin-bottom: 10px;
+    font-size: 32px;
+    line-height: 1.1;
+}
+
+.dish-section {
+    margin-top: 36px;
+}
+
+.dish-section h2 {
+    padding-bottom: 12px;
+    border-bottom: 4px solid #c9472b;
+    font-size: 28px;
+}
+
+.basket {
+    width: 360px;
+    min-height: 500px;
+    padding: 32px;
+    background-color: #2f2f2f;
+    color: white;
+    border-radius: 24px 0 0 24px;
+}
