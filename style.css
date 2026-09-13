@@ -60,27 +60,19 @@ main {
 .restaurant-logo {
     position: absolute;
     left: 48px;
-    bottom: -55px;
-    width: 110px;
-    height: 110px;
+    bottom: -60px;
+    width: 125px;
+    height: 125px;
     border: 5px solid white;
     border-radius: 50%;
+    overflow: hidden;
     background-color: #222222;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
-.restaurant-logo span {
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.restaurant-logo strong {
-    font-size: 32px;
-    line-height: 30px;
+.restaurant-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .page-layout {
