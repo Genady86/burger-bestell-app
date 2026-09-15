@@ -73,12 +73,6 @@
     font-size: 18px;
 }
 
-footer {
-    width: 100%;
-    background-color: #222222;
-    color: white;
-}
-
 .order-button {
     width: 100%;
     margin-top: 20px;
@@ -97,16 +91,6 @@ footer {
     line-height: 1.6;
 }
 
-.footer-content {
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 32px;
-    text-align: center;
-}
-
-.mobile-basket-button {
-    display: none;
-}
 
 .mobile-basket-dialog {
     width: calc(100% - 32px);
@@ -138,4 +122,51 @@ footer {
     color: white;
     font-size: 24px;
     cursor: pointer;
+}
+
+.order-confirmation-dialog {
+    width: calc(100% - 32px);
+    max-width: 340px;
+    min-height: 255px;
+    margin: auto;
+    padding: 32px 32px 40px;
+    border: none;
+    border-radius: 30px;
+    background-color: #363534;
+    color: #fdeadc;
+}
+
+.order-confirmation-dialog::backdrop {
+    background-color: rgb(0 0 0 / 55%);
+}
+
+.confirmation-close {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    color: #fdeadc;
+    text-align: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.confirmation-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+}
+
+.delivery-icon {
+    font-size: 48px;
+}
+
+.confirmation-content h2 {
+    font-size: 32px;
+}
+
+.confirmation-content p {
+    font-size: 22px;
+    font-weight: bold;
 }

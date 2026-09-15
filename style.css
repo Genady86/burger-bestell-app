@@ -46,7 +46,7 @@ main {
 
 .hero-section {
     position: relative;
-    height: 420px;
+    height: 650px;
     overflow: visible;
 }
 
@@ -175,4 +175,17 @@ main {
     border-radius: 18px;
     background-color: white;
     cursor: pointer;
+}
+
+footer {
+    width: 100%;
+    background-color: #222222;
+    color: white;
+}
+
+.footer-content {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 32px;
+    text-align: center;
 }

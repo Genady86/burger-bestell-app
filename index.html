@@ -4,8 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Burger House</title>
+
     <link rel="icon" type="image/webp" href="./assets/img/burger-Favicon.webp">
+
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./basket.css">
     <link rel="stylesheet" href="./responsive.css">
@@ -75,6 +78,36 @@
 
         </div>
 
+        <dialog id="mobileBasketDialog" class="mobile-basket-dialog">
+            <div class="mobile-basket-header">
+                <h2>Warenkorb</h2>
+
+                <button class="mobile-basket-close" type="button" onclick="closeMobileBasket()"
+                    aria-label="Warenkorb schließen">
+                    ✕
+                </button>
+            </div>
+
+            <div id="mobileBasketContent">
+                Dein Warenkorb ist leer.
+            </div>
+        </dialog>
+        <dialog id="orderConfirmationDialog" class="order-confirmation-dialog">
+
+            <button class="confirmation-close" type="button" aria-label="Bestellbestätigung schließen"
+                onclick="closeOrderConfirmation()">
+                ✕
+            </button>
+
+            <div class="confirmation-content">
+                <div class="delivery-icon">🚚🍔</div>
+
+                <h2>Bestellung bestätigt!</h2>
+
+                <p>Dein Essen ist unterwegs!</p>
+            </div>
+
+        </dialog>
     </main>
 
     <footer>
@@ -83,7 +116,28 @@
         </div>
     </footer>
 
+    <nav class="mobile-bottom-nav" aria-label="Mobile Navigation">
+        <div class="mobile-nav-item" aria-hidden="true">
+            <img src="./assets/icons/home.svg" alt="">
+        </div>
+
+        <div class="mobile-nav-item" aria-hidden="true">
+            <img src="./assets/icons/profile.svg" alt="">
+        </div>
+
+        <div class="mobile-nav-item" aria-hidden="true">
+            <img src="./assets/icons/orders.svg" alt="">
+        </div>
+
+        <button id="mobileBasketNavButton" class="mobile-nav-item mobile-cart-button" type="button"
+            onclick="openMobileBasket()" disabled aria-label="Warenkorb öffnen">
+            <img src="./assets/icons/basket.svg" alt="">
+            <span id="mobileBasketCount" class="mobile-basket-count">0</span>
+        </button>
+    </nav>
+
     <script src="./data.js"></script>
+    <script src="./templates.js"></script>
     <script src="./script.js"></script>
 
 </body>

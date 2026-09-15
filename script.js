@@ -1,141 +1,146 @@
-let basket = [];
+let basket = []; // Speichert alle Gerichte im Warenkorb.
+const DELIVERY_COST = 4.99; // Feste Lieferkosten.
 
 function renderDishes() {
-    let dishContent = document.getElementById('dishContent');
-    dishContent.innerHTML = '';
+    let dishContent = document.getElementById('dishContent'); // Holt den Bereich für die Gerichte.
+    dishContent.innerHTML = ''; // Leert den Bereich vor dem Rendern.
 
     for (let i = 0; i < dishes.length; i++) {
-        dishContent.innerHTML += getDishTemplate(i);
+        dishContent.innerHTML += getDishTemplate(i); // Fügt jedes Gericht hinzu.
     }
-}
-
-function getDishTemplate(index) {
-    let dish = dishes[index];
-
-    return `
-        <article class="dish-card">
-            <img class="dish-image" src="${dish.image}" alt="${dish.name}">
-            <div class="dish-info"><h3>${dish.name}</h3><p>${dish.description}</p></div>
-            <div class="dish-actions"><strong>${formatPrice(dish.price)}</strong>
-            <button class="dish-button" onclick="addToBasket(${index})">In den Warenkorb</button></div>
-        </article>
-    `;
 }
 
 function addToBasket(dishIndex) {
-    let basketIndex = findBasketIndex(dishIndex);
+    let basketIndex = findBasketIndex(dishIndex); // Sucht das Gericht im Warenkorb.
 
     if (basketIndex === -1) {
-        basket.push({ dishIndex: dishIndex, amount: 1 });
+        basket.push({ dishIndex: dishIndex, amount: 1 }); // Fügt ein neues Gericht hinzu.
     } else {
-        basket[basketIndex].amount++;
+        basket[basketIndex].amount++; // Erhöht die vorhandene Menge.
     }
 
-    renderBasket();
+    renderBasket(); // Aktualisiert den Warenkorb.
 }
 
 function findBasketIndex(dishIndex) {
     for (let i = 0; i < basket.length; i++) {
         if (basket[i].dishIndex === dishIndex) {
-            return i;
+            return i; // Gibt die Position des Gerichts zurück.
         }
     }
 
-    return -1;
+    return -1; // Gericht wurde nicht gefunden.
 }
 
 function renderBasket() {
-    let basketContent = document.getElementById('basketContent');
+    let basketHtml = getBasketContent(); // Erstellt den Warenkorb-Inhalt.
 
+    document.getElementById('basketContent').innerHTML = basketHtml; // Aktualisiert Desktop.
+    document.getElementById('mobileBasketContent').innerHTML = basketHtml; // Aktualisiert Mobile.
+    updateMobileBasketButton(); // Aktualisiert den Warenkorb in der Bottom-Bar.
+}
+
+function getBasketContent() {
     if (basket.length === 0) {
-        basketContent.innerHTML = 'Dein Warenkorb ist leer.';
-        return;
+        return 'Dein Warenkorb ist leer.'; // Gibt die Leer-Meldung zurück.
     }
 
-    basketContent.innerHTML = '';
+    return getBasketItemsHtml() + getBasketTotalTemplate(); // Gibt Warenkorb und Gesamtpreis zurück.
+}
+
+function getBasketItemsHtml() {
+    let basketHtml = ''; // Sammelt alle Warenkorb-Artikel.
 
     for (let i = 0; i < basket.length; i++) {
-        basketContent.innerHTML += getBasketTemplate(i);
+        basketHtml += getBasketTemplate(i); // Fügt jeden Warenkorb-Artikel hinzu.
     }
 
-    basketContent.innerHTML += getBasketTotalTemplate();
+    return basketHtml; // Gibt das fertige HTML zurück.
+}
+
+function calculateBasketSubtotal() {
+    let subtotal = 0; // Startwert der Zwischensumme.
+
+    for (let i = 0; i < basket.length; i++) {
+        let dish = dishes[basket[i].dishIndex]; // Holt das passende Gericht.
+        subtotal += dish.price * basket[i].amount; // Addiert Preis mal Menge.
+    }
+
+    return subtotal; // Gibt die Zwischensumme zurück.
 }
 
 function calculateBasketTotal() {
-    let total = 0;
-
-    for (let i = 0; i < basket.length; i++) {
-        let dish = dishes[basket[i].dishIndex];
-        total += dish.price * basket[i].amount;
+    if (basket.length === 0) {
+        return 0; // Bei leerem Warenkorb entstehen keine Lieferkosten.
     }
 
-    return total;
+    return calculateBasketSubtotal() + DELIVERY_COST; // Addiert 4,99 € Lieferkosten.
 }
 
-function getBasketTotalTemplate() {
-    return `
-        <div class="basket-total">
-            <span>Gesamt</span>
-            <strong>${formatPrice(calculateBasketTotal())}</strong>
-        </div>
-
-        <button class="order-button" onclick="orderBasket()">
-            Jetzt bestellen
-        </button>
-    `;
+function openMobileBasket() {
+    let dialog = document.getElementById('mobileBasketDialog'); // Holt den mobilen Warenkorb.
+    dialog.showModal(); // Öffnet den Dialog.
 }
 
-function orderBasket() {
-    basket = [];
-    let basketContent = document.getElementById('basketContent');
-    basketContent.innerHTML = getOrderConfirmationTemplate();
-}
-
-function getOrderConfirmationTemplate() {
-    return `
-        <div class="order-confirmation">
-            ✅ Testbestellung erfolgreich!
-            <p>Vielen Dank für deine Bestellung.</p>
-        </div>
-    `;
-}
-
-function getBasketTemplate(index) {
-    let basketItem = basket[index];
-    let dish = dishes[basketItem.dishIndex];
-
-    return `
-        <div class="basket-item">
-            <strong>${dish.name}</strong>
-            <span>${formatPrice(dish.price * basketItem.amount)}</span>
-            <div class="basket-controls">
-                <button onclick="decreaseAmount(${index})">−</button>
-                <span>${basketItem.amount}</span>
-                <button onclick="increaseAmount(${index})">+</button>
-                <button onclick="deleteBasketItem(${index})">🗑️</button>
-            </div>
-        </div>
-    `;
+function closeMobileBasket() {
+    let dialog = document.getElementById('mobileBasketDialog'); // Holt den mobilen Warenkorb.
+    dialog.close(); // Schließt den Dialog.
 }
 
 function increaseAmount(index) {
-    basket[index].amount++;
-    renderBasket();
+    basket[index].amount++; // Erhöht die Menge um 1.
+    renderBasket(); // Aktualisiert den Warenkorb.
 }
 
 function decreaseAmount(index) {
     if (basket[index].amount > 1) {
-        basket[index].amount--;
+        basket[index].amount--; // Verringert die Menge um 1.
     } else {
-        basket.splice(index, 1);
+        basket.splice(index, 1); // Entfernt den Artikel bei Menge 1.
     }
 
-    renderBasket();
+    renderBasket(); // Aktualisiert den Warenkorb.
 }
 
 function deleteBasketItem(index) {
-    basket.splice(index, 1);
-    renderBasket();
+    basket.splice(index, 1); // Entfernt das Gericht vollständig.
+    renderBasket(); // Aktualisiert den Warenkorb.
+}
+
+function orderBasket() {
+    basket = []; // Leert den Warenkorb.
+    renderBasket(); // Aktualisiert Desktop und Mobile.
+    closeMobileBasket(); // Schließt den mobilen Warenkorb.
+    openOrderConfirmation(); // Öffnet die Bestellbestätigung.
+}
+
+function openOrderConfirmation() {
+    let dialog = document.getElementById('orderConfirmationDialog'); // Holt die Bestellbestätigung.
+    dialog.showModal(); // Öffnet den Dialog.
+}
+
+function closeOrderConfirmation() {
+    let dialog = document.getElementById('orderConfirmationDialog'); // Holt die Bestellbestätigung.
+    dialog.close(); // Schließt den Dialog.
+}
+
+function updateMobileBasketButton() {
+    let button = document.getElementById('mobileBasketNavButton'); // Holt den Warenkorb-Button.
+    let count = document.getElementById('mobileBasketCount'); // Holt die Mengenanzeige.
+    let amount = getBasketAmount(); // Berechnet die gesamte Artikelmenge.
+
+    button.disabled = basket.length === 0; // Aktiviert den Button nur mit Inhalt.
+    count.innerHTML = amount; // Zeigt die aktuelle Artikelmenge an.
+}
+
+function getBasketAmount() {
+    let amount = 0; // Startwert der Artikelmenge.
+
+    for (let i = 0; i < basket.length; i++) {
+        amount += basket[i].amount; // Addiert die Menge jedes Warenkorb-Artikels.
+    }
+
+    return amount; // Gibt die gesamte Artikelmenge zurück.
 }
 
 function formatPrice(price) {
@@ -145,4 +150,5 @@ function formatPrice(price) {
     });
 }
 
-renderDishes();
+renderDishes(); // Rendert beim Seitenstart alle Gerichte.
+renderBasket(); // Rendert beim Seitenstart den leeren Warenkorb.
